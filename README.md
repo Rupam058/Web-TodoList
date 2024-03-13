@@ -6,4 +6,4 @@
 * All the Activites are saved in local storage. Even if the Page gets reloaded all the progress is being saved.
 * The deleted activites get deleted from the storage also.
 
-Live Link - https://rupam058.github.io/Web-TodoList/
+Live Link -> https://web-todo-list-chi.vercel.app/
