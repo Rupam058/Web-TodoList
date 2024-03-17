@@ -67,6 +67,7 @@ function deleteCheck(event)
 
         //remove from local storage too
         removeLocalTodos(todo);
+        removeLocalComplete(todo);
 
         todo.addEventListener('transitionend', () =>
         {
@@ -79,7 +80,18 @@ function deleteCheck(event)
     {
         const todo = item.parentElement;
         todo.classList.toggle('completed');
-        // console.log(todo.innerText);
+        // console.log(todo.parentElement);
+
+        const thisTodo = todo.innerText;
+
+        if (todo.classList.contains('completed'))
+        {
+            saveLocalComplete(thisTodo);
+        }
+        else
+        {
+            removeLocalComplete(thisTodo)
+        }
     }
 }
 
@@ -138,6 +150,18 @@ function saveLocalTodos(todo)
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+function saveLocalComplete(thisTodo)
+{
+    let complete = [];
+    if (localStorage.getItem("complete") === null) { }
+    else
+    {
+        complete = JSON.parse(localStorage.getItem("complete"));
+    }
+    complete.push(thisTodo);
+    localStorage.setItem("complete", JSON.stringify(complete));
+}
+
 
 // Getting the earlier todos from local storage to the main UI.
 function getTodos()
@@ -164,6 +188,7 @@ function getTodos()
 
         todoDiv.appendChild(newTodo);
 
+
         //Check mark button
         const completedButton = document.createElement('button');
         completedButton.innerHTML = '<i class="fas fa-check"></i>';
@@ -176,10 +201,30 @@ function getTodos()
         trashButton.classList.add('trash-btn');
         todoDiv.appendChild(trashButton);
 
+
+        // --------------------------------------------------
+        // For the Complete
+        let complete = [];
+        if (localStorage.getItem("complete") === null) { }
+        else
+        {
+            complete = JSON.parse(localStorage.getItem("complete"));
+        }
+        // console.log(todoDiv.innerText);
+        // console.log(complete)
+
+        const thisTodo = todoDiv.innerText
+
+        if (complete.includes(thisTodo))
+        {
+            todoDiv.classList.add('completed')
+        }
+
         //Append to List
         todoList.appendChild(todoDiv);
 
     })
+
 }
 
 function removeLocalTodos(todo)
@@ -198,5 +243,25 @@ function removeLocalTodos(todo)
     todos.splice(todos.indexOf(todoIndex), 1);
 
     localStorage.setItem("todos", JSON.stringify(todos));
+
+}
+
+
+
+function removeLocalComplete(thisTodo)
+{
+    let complete = [];
+    if (localStorage.getItem("complete") === null) { }
+    else
+    {
+        complete = JSON.parse(localStorage.getItem("complete"));
+    }
+
+    // console.log(todo.children[0].innerText);
+    // console.log(todos.indexOf("chocolate"))
+
+    // const deleteThis = todo.children[0].innerText;
+    complete.splice(thisTodo, 1);
+    localStorage.setItem("complete", JSON.stringify(complete));
 
 }
