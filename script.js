@@ -31,10 +31,6 @@ function addTodo(event)
 
     todoDiv.appendChild(newTodo);
 
-    // Add Todo to LocalStorage
-    saveLocalTodos(todoInput.value);
-
-
     //Check mark button
     const completedButton = document.createElement('button');
     completedButton.innerHTML = '<i class="fas fa-check"></i>';
@@ -49,6 +45,10 @@ function addTodo(event)
 
     //Append to List
     todoList.appendChild(todoDiv);
+
+
+    // Add Todo to LocalStorage
+    saveLocalTodos(todoInput.value);
 
     // Clear Todo input value
     todoInput.value = "";
@@ -65,6 +65,7 @@ function deleteCheck(event)
         //Animation
         todo.classList.add("fall");
 
+        //remove from local storage too
         removeLocalTodos(todo);
 
         todo.addEventListener('transitionend', () =>
@@ -78,6 +79,7 @@ function deleteCheck(event)
     {
         const todo = item.parentElement;
         todo.classList.toggle('completed');
+        // console.log(todo.innerText);
     }
 }
 
@@ -196,5 +198,5 @@ function removeLocalTodos(todo)
     todos.splice(todos.indexOf(todoIndex), 1);
 
     localStorage.setItem("todos", JSON.stringify(todos));
-    
+
 }
