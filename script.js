@@ -200,3 +200,6 @@ function removeLocalTodos(todo)
     localStorage.setItem("todos", JSON.stringify(todos));
 
 }
+
+
+console.log("meine kuch likha")
